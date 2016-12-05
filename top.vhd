@@ -33,21 +33,49 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity top is
 	generic (
-		clock_freq: natural := 50000000
+		clock_freq: natural := 50000000					-- para ajustar la frecuencia de simulacion
 	);
 	port (
-		reset  : in  std_logic;
-		clk_in : in  std_logic;	
-		acel   : in  std_logic;
-		decel  : in  std_logic;
-		digit  : out std_logic_vector ( 3 downto 0);
-		segment: out std_logic_vector ( 7 downto 0)
+		reset  : in  std_logic;								-- Reset de la entidad superior
+		clk_in : in  std_logic;								-- reloj de la entidad top
+		acel   : in  std_logic;								-- boton de aceleracion
+		decel  : in  std_logic;								-- boton de deceleracion
+		digit  : out std_logic_vector ( 3 downto 0);	-- seleccion de display
+		segment: out std_logic_vector ( 7 downto 0)  -- seleccion de segmento
 	);
 end top;
 
-architecture behavioral of top is
+architecture behavioral of top is	-- entidad para acondicionar las entradas d elos botones (sincronia y rebotes)
 
+	component but_acond is
+		port (
+			reset  : in  std_logic;		-- reset del acondicionamiento
+			clk_in : in  std_logic;		-- reloj del acondicionamiento
+         but_in : in  std_logic;		-- boton a acondicionar
+         but_out: out std_logic		-- boton acondicionado
+		);
+	end component;
+  
+   signal  acel_out: std_logic;
+   signal decel_out: std_logic;
+	
 begin
+
+	acel_acond: but_acond			--acondicionamientgo de aceleracion
+		port map (
+			reset   => reset,
+			clk_in  => clk_in,
+         but_in  => acel,
+         but_out => acel_out
+		);
+
+	decel_acond: but_acond			--acondicionamiento de deceleracion
+		port map (
+			reset   => reset,
+			clk_in  => clk_in,
+         but_in  => decel,
+         but_out => decel_out
+		);
 
 
 end behavioral;
