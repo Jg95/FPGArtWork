@@ -30,9 +30,10 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity decod_letra_7seg is
-    Port ( letra : in  character;
-					leds: out  STD_LOGIC_VECTOR ( 6 downto 0)
-				);
+   Port ( 
+		letra : in  character;
+		leds: out  STD_LOGIC_VECTOR ( 6 downto 0)
+	);
 end decod_letra_7seg;
 
 architecture dataflow of decod_letra_7seg is

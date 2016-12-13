@@ -59,6 +59,17 @@ architecture behavioral of top is	-- entidad para acondicionar las entradas d el
    signal  acel_out: std_logic;
    signal decel_out: std_logic;
 	
+	
+	component message_bus is
+		port(
+			reset		: in std_logic;							--reset
+			clk		: in std_logic;							--reloj
+			acel		: in std_logic;							--boton de aceleracion
+			decel		: in std_logic;							--boton de deceleracion
+			digit		: out std_logic_vector(3 downto 0);	--seleccion del display
+			segment	: out std_logic_vector(7 downto 0)	--seleccion de segmentos
+		);
+	end component;
 begin
 
 	acel_acond: but_acond			--acondicionamientgo de aceleracion
@@ -76,6 +87,15 @@ begin
          but_in  => decel,
          but_out => decel_out
 		);
-
+		
+	message: message_bus			--logica del mensaje
+		port map (
+			reset => reset,
+			clk	=> clk_in,
+			acel	=> acel_out,
+			decel	=> decel_out,
+			digit => digit,
+			segment => segment
+		);
 
 end behavioral;
