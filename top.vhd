@@ -33,7 +33,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity top is
 	generic (
-		clock_freq: natural := 50000000					-- para ajustar la frecuencia de simulacion
+		clock_freq: integer := 50000000					-- para ajustar la frecuencia de simulacion
 	);
 	port (
 		reset  : in  std_logic;								-- Reset de la entidad superior

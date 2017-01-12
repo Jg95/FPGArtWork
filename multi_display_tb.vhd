@@ -2,15 +2,15 @@
 -- Company: 
 -- Engineer:
 --
--- Create Date:   17:14:29 12/13/2016
+-- Create Date:   18:05:18 01/12/2017
 -- Design Name:   
--- Module Name:   C:/Users/pc/Documents/trabajoSED_Rotulo/ForPrintingGeniusArrays/counter_tb.vhd
+-- Module Name:   C:/Users/pc/Documents/trabajoSED_Rotulo/ForPrintingGeniusArrays/multi_display_tb.vhd
 -- Project Name:  ROTULO
 -- Target Device:  
 -- Tool versions:  
 -- Description:   
 -- 
--- VHDL Test Bench Created by ISE for module: counter
+-- VHDL Test Bench Created by ISE for module: multi_display
 -- 
 -- Dependencies:
 -- 
@@ -27,25 +27,25 @@
 --------------------------------------------------------------------------------
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-USE ieee.numeric_std.ALL;
  
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY counter_tb IS
-END counter_tb;
+ENTITY multi_display_tb IS
+END multi_display_tb;
  
-ARCHITECTURE behavior OF counter_tb IS 
+ARCHITECTURE behavior OF multi_display_tb IS 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT counter
+    COMPONENT multi_display
     PORT(
-         reset : in  std_logic;
-         clk : in  std_logic;
-         count_max : in  integer;
-         result : out  std_logic
+         reset : IN  std_logic;
+         clk : IN  std_logic;
+         message : IN  string(4 downto 1);
+         digit : OUT  std_logic_vector(3 downto 0);
+         segment : OUT  std_logic_vector(7 downto 0)
         );
     END COMPONENT;
     
@@ -53,10 +53,11 @@ ARCHITECTURE behavior OF counter_tb IS
    --Inputs
    signal reset : std_logic := '0';
    signal clk : std_logic := '0';
-   signal count_max : integer := 0;
+   signal message : string(4 downto 1) := "HOLA";
 
  	--Outputs
-   signal result : std_logic;
+   signal digit : std_logic_vector(3 downto 0);
+   signal segment : std_logic_vector(7 downto 0);
 
    -- Clock period definitions
    constant clk_period : time := 10 ns;
@@ -64,11 +65,12 @@ ARCHITECTURE behavior OF counter_tb IS
 BEGIN
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: counter PORT MAP (
+   uut: multi_display PORT MAP (
           reset => reset,
           clk => clk,
-          count_max => count_max,
-          result => result
+          message => message,
+          digit => digit,
+          segment => segment
         );
 
    -- Clock process definitions
@@ -85,14 +87,13 @@ BEGIN
    stim_proc: process
    begin		
       -- hold reset state for 100 ns.
-      wait for 100 ns;
-
-			count_max <= 20;
-
-      wait for clk_period*25;
+      --wait for 100 ns;	
+		
+      wait for clk_period*10;
 
       -- insert stimulus here 
-
+		assert false severity failure;
+		
       wait;
    end process;
 

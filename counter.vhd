@@ -33,30 +33,35 @@ entity counter is
 	port(
 		reset			: in std_logic;
 		clk			: in std_logic;
-		count_max	: in natural;
+		count_max	: in integer;
 		result		: out std_logic
 	);
 end counter;
 
 architecture Behavioral of counter is
 
-	signal count: natural := 0;
+	signal count: integer := 0;
 	signal reset_result: std_logic := '0';
 
 begin
 
-	process(clk)
+	process(clk, reset)
 	begin
-	if (count_max > 0) then
-		count <= count + 1;
-		if (reset_result = '1') then
-			reset_result <= '0';
-		elsif (count >= count_max) then
+		if (reset = '1') then
 			count <= 0;
-			reset_result <= '1';
+			reset_result <= '0';
+		elsif (clk'event) and (clk = '1') then
+			if (count_max > 0) then
+				count <= count + 1;
+				if (reset_result = '1') then
+					reset_result <= '0';
+				elsif (count >= count_max) then
+					count <= 0;
+					reset_result <= '1';
+				end if;
+			end if;
+			result <= reset_result;
 		end if;
-	end if;
-	result <= reset_result;
 	end process;
 
 end Behavioral;

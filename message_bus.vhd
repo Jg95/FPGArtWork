@@ -31,8 +31,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity message_bus is
 	generic(
-		clock_freq	: natural := 50000000;
-		interval		: float := 0.25
+		clock_freq	: integer := 50000000;
+		interval		: integer := 25
 	);
 	port(
 		reset		: in std_logic;							--reset
@@ -60,20 +60,18 @@ architecture Behavioral of message_bus is
 		port(
 			reset			: in std_logic;	--reset
 			clk			: in std_logic;	--reloj
-			count_max	: in natural;		--end of the counter
+			count_max	: in integer;		--end of the counter
 			result		: out std_logic	--'1' if the counter has ended
 		);
 	end component;
 		
 	constant global_message: string(9 downto 1) := "HOLA LUIS"; --Las string no tienen 0
-	signal start_message: natural := 9; --Indice de inicio mostrado de global message
+	signal start_message: integer := 9; --Indice de inicio mostrado de global message
 	signal message_to_send: string(4 downto 1);
-	signal timer_max: natural := clock_freq;
-	signal trigger: std_logic := 0;
+	signal timer_max: integer := clock_freq / 2; --Para simulaciones usar clock_freq / 10000000
+	signal trigger: std_logic := '0';
 	
 begin	
-	message_to_send <= global_message(start_message downto start_mesagge-3);
-	
 	message_handler: multi_display
 		port map(
 			reset		=> reset,
@@ -91,15 +89,26 @@ begin
 			result		=> trigger
 		);
 	
-	process (clk)
-	begin if (trigger = '1') then
-		start_message <= start_message - 1;
-	end if;
-	if (acel = '1') then
-		timer_max <= timer_max - clock_freq * interval;
-	elsif (decel = '1') then
-		timer_max <= timer_max + clock_freq * interval;
-	end if;
+	process (clk, reset)
+	begin 
+		if (reset = '1') then
+			start_message <= 9;
+			timer_max <= clock_freq;
+		elsif clk'event and clk = '1' then
+			message_to_send <= global_message(start_message downto start_message-3);
+			if (trigger /= '0') then --trigger es 'x' en lugar de '1'
+				if (start_message - 3 = 1) then
+					start_message <= 9;
+				else
+					start_message <= start_message - 1;
+				end if;
+			end if;
+			if (acel = '1') then
+				timer_max <= timer_max - clock_freq * interval / 100; --Para simulaciones usar clock_freq / 10000000
+			elsif (decel = '1') then
+				timer_max <= timer_max + clock_freq * interval / 100; --Para simulaciones usar clock_freq / 10000000
+			end if;
+		end if;
 	end process;
 
 end Behavioral;

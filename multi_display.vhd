@@ -41,8 +41,47 @@ end multi_display;
 
 architecture Behavioral of multi_display is
 
-begin
+signal letra: character;
+signal i: integer := 4;
+signal sig_digit: std_logic_vector(3 downto 0) := "1000"; 
+	
+component decod_letra_7seg is
+   port ( 
+		letra : in  character;
+		leds: out  std_logic_vector(6 downto 0)
+	);
+end component;
 
+	begin
+
+	decoder: decod_letra_7seg
+			port map(
+				letra 	=> letra,
+				leds		=> segment(7 downto 1)
+			);
+	
+	process (clk, reset)
+	begin
+		segment(0) <= '0';
+		if (reset = '1') then
+			sig_digit <= "1000";
+			i <= 4;
+		elsif (clk'event) and (clk = '1') then
+			letra <= message(i);
+			case sig_digit is
+				when "1000" => sig_digit <= "0100";
+				when "0100" => sig_digit <= "0010";
+				when "0010" => sig_digit <= "0001";
+				when others => sig_digit <= "1000";
+			end case;
+			digit <= sig_digit;
+			if (i = 1) then
+				i <= 4;
+			else
+				i <= i - 1;
+			end if;
+		end if;
+	end process;
 
 end Behavioral;
 
