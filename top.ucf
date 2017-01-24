@@ -1,0 +1,48 @@
+
+# PlanAhead Generated IO constraints 
+
+NET "digit[3]" IOSTANDARD = LVCMOS33;
+NET "digit[2]" IOSTANDARD = LVCMOS33;
+NET "digit[1]" IOSTANDARD = LVCMOS33;
+NET "digit[0]" IOSTANDARD = LVCMOS33;
+NET "m_selec[2]" IOSTANDARD = LVCMOS33;
+NET "m_selec[1]" IOSTANDARD = LVCMOS33;
+NET "m_selec[0]" IOSTANDARD = LVCMOS33;
+NET "segment[7]" IOSTANDARD = LVCMOS33;
+NET "segment[6]" IOSTANDARD = LVCMOS33;
+NET "segment[5]" IOSTANDARD = LVCMOS33;
+NET "segment[4]" IOSTANDARD = LVCMOS33;
+NET "segment[3]" IOSTANDARD = LVCMOS33;
+NET "segment[2]" IOSTANDARD = LVCMOS33;
+NET "segment[1]" IOSTANDARD = LVCMOS33;
+NET "segment[0]" IOSTANDARD = LVCMOS33;
+NET "acel" IOSTANDARD = LVCMOS33;
+NET "clk_in" IOSTANDARD = LVCMOS33;
+NET "decel" IOSTANDARD = LVCMOS33;
+NET "mode" IOSTANDARD = LVCMOS33;
+NET "reset" IOSTANDARD = LVCMOS33;
+NET "selec" IOSTANDARD = LVCMOS33;
+
+# PlanAhead Generated physical constraints 
+
+NET "digit[3]" LOC = E13;
+NET "digit[2]" LOC = F14;
+NET "digit[1]" LOC = G14;
+NET "digit[0]" LOC = D14;
+NET "m_selec[2]" LOC = H14;
+NET "m_selec[1]" LOC = G12;
+NET "m_selec[0]" LOC = F12;
+NET "segment[7]" LOC = E14;
+NET "segment[4]" LOC = P15;
+NET "segment[2]" LOC = F13;
+NET "segment[5]" LOC = N15;
+NET "segment[6]" LOC = G13;
+NET "segment[3]" LOC = R16;
+NET "segment[1]" LOC = N16;
+NET "segment[0]" LOC = P16;
+NET "acel" LOC = L13;
+NET "clk_in" LOC = T9;
+NET "decel" LOC = L14;
+NET "mode" LOC = K14;
+NET "reset" LOC = K13;
+NET "selec" LOC = M14;
